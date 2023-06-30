@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product-card</title>
+    
+<!-- jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+<!-- data table cdn -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+<!-- simple pagination cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
+</head>
+<body>
+        <script>
+            var laptopobj = '{ "laptop" : ['+
+            '{ "productimg":"Asus.jpg", "brand":"Asus","color":"Grey","version":"32bits" },'+
+            '{ "productimg":"DELL.jpg", "brand":"Dell","color":"Black","version":"64bits" },'+
+            '{ "productimg":"Lenovo.jpg", "brand":"Lenovo","color":"white","version":"32bits" },'+
+            '{ "productimg":"Honor.jpg", "brand":"Honor","color":"Grey", "version":"64bits" },'+
+            '{ "productimg":"Acer.jpg", "brand":"Acer","color":"Dark blue","version":"32bits" } ]}';
+
+             
+            var project = JSON.parse(laptopobj);
+            document.write("Row count: " + project.laptop.length + "<br>");
+         for (let index = 0; index < project.laptop.length; index++)
+        {
+            document.write("Row index " + index + "and col  brand data : " + project.laptop[index].brand +"<br>");
+            document.write("Row index " + index + "and col color data : " + project.laptop[index].color +"<br>");
+            
+            
+            
+            document.write("Row index " + index + "and col  version data : " + project.laptop[index].version +"<br><br>");
+          
+            
+            document.write("<img src='" + project.laptop[index].productimg + "' width='150px' height='150px'><br>");
+        }
+        </script>
+          <hr>
+          <h2>Laptop lsit</h2>
+          <table id="myTable" class="display">
+              <thead>
+                  <tr>
+                      <th>No.</th>
+                      <th>Brand</th>
+                      <th>Color</th>
+                      <th>Version</th>
+                      
+                  </tr>
+             </thead>
+            <tbody>
+              <script>
+                  for(let index = 0; index <project.laptop.length; index++)
+                  {
+                  document.write("<tr>");
+                  document.write("<td>"  + (index+1) + "</td>");
+                  document.write("<td>" + project.laptop[index].brand + "</td>"); 
+                  document.write("<td>" + project.laptop[index].color+ "</td>");              
+                  document.write("<td>" + project.laptop[index].version+"</td>");
+                  document.write("</tr>");                           
+                  }
+          
+              
+                 $(document).ready( function () {
+                      $('#myTable').DataTable();
+                  } );
+              </script>
+           </tbody>
+              
+       </table>
+
+        <style>
+            #container
+            {
+                width: 88%;
+                margin: auto;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                row-gap: 70px;
+                align-content: center;
+            }
+            #container > div
+            {
+                width: 290px;
+                height: 240px;
+                box-shadow: 1px 1px 4px 4px rgb(107, 106, 106);
+                padding: 0px 15px 170px 15px;
+                font-size: 14pt;
+            }
+            #container > div > img
+            {
+                width: 100%;
+                height: 250px;
+            }
+            #but
+            {
+                border: 2px solid black;
+                background-color: rgb(31, 169, 169);
+                color: white;
+                padding: 10px 15px;
+                margin-left: 90px;
+                margin-top: 8px;
+            }
+            #but:hover
+            {
+                background-color: white;
+                color: black;
+            }
+        </style>
+        <div id="container">
+            <script>
+            for(let index = 0; index < project.laptop.length; index++)
+            {
+            document.write("<div class='item-dis'>");
+            document.write("<img src='" +  project.laptop[index].productimg +"' width='200px' height='200px'><br>");
+            document.write("Brand : " + project.laptop[index].brand + "<br>"); 
+            document.write("Color : " + project.laptop[index].color + "<br>");              
+            document.write("Version : " + project.laptop[index].version + "<br>");  
+            document.write("<button id='but'> More detail </button>")
+            document.write("</div>");                          
+            }
+            </script>
+        </div>
+`
+        <article id="pagination-container" style="margin: auto; width: fit-content; margin-top: 40px; margin-bottom: 40px;"></article>
+        <script>
+            var item =$('.item-dis');
+            var numItems = item.length;
+            var perPage = 3;
+
+            item.slice(perPage).hide();
+
+            $(function() {
+                $('#pagination-container').pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    cssStyle: 'dark-theme',
+                    onPageClick: function(pageNumber) {
+                            var showFrom = perPage * (pageNumber - 1);
+                            var showTo = showFrom + perPage;
+                            item.hide().slice(showFrom, showTo).show();
+                         }
+                        });
+                       });
+       </script>
+</body>
+</html>
